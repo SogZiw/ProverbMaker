@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License along with pinyin4j.
  */
 
-package com.song.proverbmaker;
+package com.song.proverbmaker.helper;
 
 public class PinyinFormatter {
 

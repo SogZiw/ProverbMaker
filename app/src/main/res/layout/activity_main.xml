@@ -29,7 +29,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
+            android:layout_marginHorizontal="12dp"
             android:layout_marginBottom="10dp"
             android:text="tips:必须以英文逗号分隔，不能留有空格，1234分别代表一声到四声，5或不写数字为轻声，例如ren4,tian1" />
 
@@ -39,6 +39,41 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:hint="输入释义" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbDefault"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="默认显示" />
+
+            <RadioButton
+                android:id="@+id/rbFullScreen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="全屏显示(长按保存图片)" />
+        </RadioGroup>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etMargin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="输入内容距离顶部高度"
+            android:inputType="number" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginBottom="10dp"
+            android:text="tips:高度最小为60，不足60自动补足，仅全屏显示时有效" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnMake"
@@ -62,13 +97,14 @@
                 android:id="@+id/proverbList"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:overScrollMode="never" />
 
             <TextView
                 android:id="@+id/tvExplanation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
+                android:layout_marginHorizontal="30dp"
                 android:layout_marginTop="20dp"
                 android:textColor="@color/black"
                 android:textSize="18dp"

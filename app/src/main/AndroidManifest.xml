@@ -33,6 +33,11 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".FullScreenActivity"
+            android:screenOrientation="fullSensor"
+            android:theme="@style/FullScreenTheme" />
+
         <!-- 适配 Android 7.0 文件意图 -->
         <provider
             android:name="androidx.core.content.FileProvider"

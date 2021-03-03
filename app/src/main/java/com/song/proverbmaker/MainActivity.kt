@@ -7,6 +7,7 @@ import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.os.Parcelable
 import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -20,6 +21,8 @@ import com.hjq.permissions.Permission
 import com.hjq.toast.ToastUtils
 import com.song.proverbmaker.aop.Permissions
 import com.song.proverbmaker.aop.SingleClick
+import com.song.proverbmaker.helper.PinyinFormatter
+import kotlinx.android.parcel.Parcelize
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_single_text.view.*
 import net.sourceforge.pinyin4j.PinyinHelper
@@ -101,7 +104,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
 
-        val data: MutableList<SingleText> = ArrayList()
+        val data: ArrayList<SingleText> = ArrayList()
         for (i in proverbList.indices) {
             var pinyin = ""
             if (isUseCustomPinyin) {
@@ -121,16 +124,35 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
             data.add(SingleText(proverbList[i], pinyin))
         }
-        mAdapter.setList(data)
-        if (!TextUtils.isEmpty(etExplanation.text.toString().trim())) {
-            val simplifySpan =
-                SimplifySpanBuild().append(SpecialTextUnit("释义：").setTextStyle(Typeface.BOLD))
-                    .append(etExplanation.text.toString())
-                    .build()
-            tvExplanation.text = simplifySpan
+
+        if (rbDefault.isChecked) {
+            mAdapter.setList(data)
+            if (!TextUtils.isEmpty(etExplanation.text.toString().trim())) {
+                val simplifySpan =
+                    SimplifySpanBuild().append(SpecialTextUnit("释义：").setTextStyle(Typeface.BOLD))
+                        .append(etExplanation.text.toString())
+                        .build()
+                tvExplanation.text = simplifySpan
+            }
+            layoutContent.visibility = View.VISIBLE
+            btnSave.visibility = View.VISIBLE
+        } else {
+            val textExplanation = etExplanation.text.toString()
+            val intent = Intent(this, FullScreenActivity::class.java)
+            var margin = 60
+            if (!TextUtils.isEmpty(etMargin.text.toString().trim())) {
+                margin = etMargin.text.toString().toInt()
+                if (margin < 60) {
+                    margin = 60
+                }
+            }
+            intent.putParcelableArrayListExtra("dataList", data)
+            intent.putExtra("explanation", textExplanation)
+            intent.putExtra("margin", margin)
+            startActivity(intent)
         }
-        layoutContent.visibility = View.VISIBLE
-        btnSave.visibility = View.VISIBLE
+
+
     }
 
     /** 获取 View 的截图*/
@@ -219,7 +241,8 @@ class HorizontalAdapter :
     }
 }
 
+@Parcelize
 class SingleText(
     var text: String?,
     var pinyin: String?
-)
+) : Parcelable

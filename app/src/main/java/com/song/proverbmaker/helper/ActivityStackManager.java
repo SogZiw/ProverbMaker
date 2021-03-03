@@ -1,4 +1,4 @@
-package com.song.proverbmaker;
+package com.song.proverbmaker.helper;
 
 import android.app.Activity;
 import android.app.Application;

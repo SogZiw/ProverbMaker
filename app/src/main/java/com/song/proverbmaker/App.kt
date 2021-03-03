@@ -1,11 +1,13 @@
 package com.song.proverbmaker
 
 import android.app.Application
+import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import com.blankj.utilcode.util.Utils
 import com.hjq.toast.ToastInterceptor
 import com.hjq.toast.ToastUtils
+import com.song.proverbmaker.helper.ActivityStackManager
 
 /**
  * Title: com.song.proverbmaker
@@ -18,8 +20,17 @@ import com.hjq.toast.ToastUtils
  */
 class App : Application() {
 
+    companion object {
+        lateinit var mApplication: Application
+
+        fun getApplication(): Context {
+            return mApplication
+        }
+    }
+
     override fun onCreate() {
         super.onCreate()
+        mApplication = this
         Utils.init(this)
         // 吐司工具类
         ToastUtils.init(this)

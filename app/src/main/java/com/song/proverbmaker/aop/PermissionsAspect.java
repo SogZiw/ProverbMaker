@@ -5,7 +5,7 @@ import android.annotation.SuppressLint;
 import com.hjq.permissions.OnPermissionCallback;
 import com.hjq.permissions.XXPermissions;
 import com.hjq.toast.ToastUtils;
-import com.song.proverbmaker.ActivityStackManager;
+import com.song.proverbmaker.helper.ActivityStackManager;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

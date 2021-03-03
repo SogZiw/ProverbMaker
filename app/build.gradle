@@ -106,4 +106,7 @@ dependencies {
     implementation 'com.belerweb:pinyin4j:2.5.0'
     // Simplifyspan Spannable library https://github.com/iwgang/SimplifySpan
     implementation 'com.github.iwgang:simplifyspan:2.1'
+
+    // 状态栏沉浸：https://github.com/gyf-dev/ImmersionBar
+    implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
 }
