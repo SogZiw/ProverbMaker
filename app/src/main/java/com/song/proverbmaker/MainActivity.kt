@@ -3,7 +3,6 @@ package com.song.proverbmaker
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Typeface
-import android.graphics.drawable.BitmapDrawable
 import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Bundle
@@ -40,6 +39,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         HorizontalAdapter()
     }
     private lateinit var msc: MediaScannerConnection
+    private var isUseCustomPinyin = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,26 +80,44 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         if (!checkIsNotEmpty()) {
             return
         }
+        isUseCustomPinyin = !TextUtils.isEmpty(etCustomPinyin.text.toString().trim())
         val proverbCollection = etProverb.text.toString().toCharArray()
         val proverbList = etProverb.text.toString().toCharArray().map {
             it.toString()
         }.toMutableList()
+
         val defaultFormat = HanyuPinyinOutputFormat()
         defaultFormat.caseType = HanyuPinyinCaseType.LOWERCASE
         defaultFormat.toneType = HanyuPinyinToneType.WITH_TONE_MARK
         defaultFormat.vCharType = HanyuPinyinVCharType.WITH_U_UNICODE
 
+        val pinyinList: MutableList<String> = ArrayList()
+        if (isUseCustomPinyin) {
+            val strList = etCustomPinyin.text.toString().split(",").toMutableList()
+            for (s in strList) {
+                var pinyinStr = s.replace("u:".toRegex(), "v")
+                pinyinStr = PinyinFormatter.convertToneNumber2ToneMark(pinyinStr)
+                pinyinList.add(pinyinStr)
+            }
+        }
+
         val data: MutableList<SingleText> = ArrayList()
         for (i in proverbList.indices) {
             var pinyin = ""
-            try {
-                val pinyinArray =
-                    PinyinHelper.toHanyuPinyinStringArray(proverbCollection[i], defaultFormat)
-                if (!pinyinArray.isNullOrEmpty()) {
-                    pinyin = pinyinArray[0].toString()
+            if (isUseCustomPinyin) {
+                if (i < pinyinList.size) {
+                    pinyin = pinyinList[i]
                 }
-            } catch (e: Exception) {
-                pinyin = ""
+            } else {
+                try {
+                    val pinyinArray =
+                        PinyinHelper.toHanyuPinyinStringArray(proverbCollection[i], defaultFormat)
+                    if (!pinyinArray.isNullOrEmpty()) {
+                        pinyin = pinyinArray[0].toString()
+                    }
+                } catch (e: Exception) {
+                    pinyin = ""
+                }
             }
             data.add(SingleText(proverbList[i], pinyin))
         }

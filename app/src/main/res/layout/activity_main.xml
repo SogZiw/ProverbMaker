@@ -19,6 +19,21 @@
             android:hint="输入词语" />
 
         <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etCustomPinyin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:hint="输入自定义拼音（可选）" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="tips:必须以英文逗号分隔，不能留有空格，1234分别代表一声到四声，5或不写数字为轻声，例如ren4,tian1" />
+
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etExplanation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
