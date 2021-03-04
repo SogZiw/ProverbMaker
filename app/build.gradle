@@ -36,7 +36,9 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            shrinkResources true
+            zipAlignEnabled true
+            minifyEnabled true
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -73,9 +75,6 @@ android {
         // Apk 输出配置
         variant.outputs.all { output ->
             outputFileName = rootProject.getName() + '_v' + variant.versionName + '_' + variant.buildType.name
-            if (variant.buildType.name == buildTypes.release.getName()) {
-                outputFileName += '_' + new Date().format("yyyyMMdd")
-            }
             outputFileName += '.apk'
         }
     }
@@ -101,15 +100,12 @@ dependencies {
     implementation 'com.blankj:utilcodex:1.29.0'
     // BaseRecyclerViewAdapterHelper RecyclerView库 https://github.com/CymChad/BaseRecyclerViewAdapterHelper
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.6'
-
     // https://github.com/belerweb/pinyin4j
     implementation 'com.belerweb:pinyin4j:2.5.0'
     // Simplifyspan Spannable library https://github.com/iwgang/SimplifySpan
     implementation 'com.github.iwgang:simplifyspan:2.1'
-
     // 状态栏沉浸：https://github.com/gyf-dev/ImmersionBar
     implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
-
     // 取色盘 https://github.com/jaredrummler/ColorPicker
     implementation 'com.jaredrummler:colorpicker:1.1.0'
 }

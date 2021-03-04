@@ -284,7 +284,7 @@ class HorizontalAdapter :
 
     private var textColor = Color.BLACK
 
-    public fun setTextColor(color: Int) {
+    fun setTextColor(color: Int) {
         textColor = color
     }
 
