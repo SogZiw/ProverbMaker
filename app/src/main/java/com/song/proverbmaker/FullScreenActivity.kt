@@ -2,6 +2,7 @@ package com.song.proverbmaker
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.Typeface
 import android.media.MediaScannerConnection
 import android.net.Uri
@@ -67,6 +68,12 @@ class FullScreenActivity : AppCompatActivity(), View.OnLongClickListener {
         val layoutParams = marginView.layoutParams
         layoutParams.height = dp2px(margin.toFloat())
         marginView.layoutParams = layoutParams
+
+        val selectBgColor = intent.getIntExtra("selectBgColor", Color.parseColor("#FFFADF4B"))
+        val selectFontColor = intent.getIntExtra("selectFontColor", Color.parseColor("#FF000000"))
+        layoutContent.setBackgroundColor(selectBgColor)
+        mAdapter.setTextColor(selectFontColor)
+        tvExplanation.setTextColor(selectFontColor)
 
         val data = intent.getParcelableArrayListExtra<SingleText>("dataList")
         val textExplanation = intent.getStringExtra("explanation")

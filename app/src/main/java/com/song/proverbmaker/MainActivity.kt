@@ -2,6 +2,7 @@ package com.song.proverbmaker
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.Typeface
 import android.media.MediaScannerConnection
 import android.net.Uri
@@ -12,6 +13,8 @@ import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.toColor
+import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.iwgang.simplifyspan.SimplifySpanBuild
 import cn.iwgang.simplifyspan.unit.SpecialTextUnit
@@ -19,6 +22,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.hjq.permissions.Permission
 import com.hjq.toast.ToastUtils
+import com.jaredrummler.android.colorpicker.ColorPickerDialog
+import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
 import com.song.proverbmaker.aop.Permissions
 import com.song.proverbmaker.aop.SingleClick
 import com.song.proverbmaker.helper.PinyinFormatter
@@ -36,7 +41,7 @@ import java.io.FileOutputStream
 import java.io.IOException
 
 
-class MainActivity : AppCompatActivity(), View.OnClickListener {
+class MainActivity : AppCompatActivity(), View.OnClickListener, ColorPickerDialogListener {
 
     private val mAdapter: HorizontalAdapter by lazy {
         HorizontalAdapter()
@@ -50,9 +55,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         init()
         btnMake.setOnClickListener(this)
         btnSave.setOnClickListener(this)
+        selectBgColor.setOnClickListener(this)
+        selectFontColor.setOnClickListener(this)
     }
 
     private fun init() {
+        selectBgColor.color = Color.parseColor("#FFFADF4B")
+        selectFontColor.color = Color.parseColor("#FF000000")
         layoutContent.visibility = View.GONE
         btnSave.visibility = View.GONE
         val layoutManager = LinearLayoutManager(this)
@@ -63,12 +72,47 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     @SingleClick
     override fun onClick(v: View?) {
-        if (v?.id == R.id.btnMake) {
-            hideSoftKeyboard()
-            make()
-        } else if (v?.id == R.id.btnSave) {
-            save()
+        when (v?.id) {
+            R.id.btnMake -> {
+                hideSoftKeyboard()
+                make()
+            }
+            R.id.btnSave -> {
+                save()
+            }
+            R.id.selectBgColor -> {
+                ColorPickerDialog.newBuilder()
+                    .setDialogType(ColorPickerDialog.TYPE_PRESETS)
+                    .setAllowPresets(false)
+                    .setDialogId(0x10001)
+                    .setColor(Color.BLACK)
+                    .setShowAlphaSlider(true)
+                    .show(this)
+            }
+            R.id.selectFontColor -> {
+                ColorPickerDialog.newBuilder()
+                    .setDialogType(ColorPickerDialog.TYPE_PRESETS)
+                    .setAllowPresets(false)
+                    .setDialogId(0x10002)
+                    .setColor(Color.BLACK)
+                    .setShowAlphaSlider(true)
+                    .show(this)
+            }
         }
+    }
+
+    override fun onColorSelected(dialogId: Int, color: Int) {
+        if (dialogId == 0x10001) {
+            selectBgColor.color = color
+            layoutContent.setBackgroundColor(color)
+        } else if (dialogId == 0x10002) {
+            selectFontColor.color = color
+            mAdapter.setTextColor(color)
+            tvExplanation.setTextColor(color)
+        }
+    }
+
+    override fun onDialogDismissed(dialogId: Int) {
     }
 
     private fun checkIsNotEmpty(): Boolean {
@@ -149,6 +193,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             intent.putParcelableArrayListExtra("dataList", data)
             intent.putExtra("explanation", textExplanation)
             intent.putExtra("margin", margin)
+            intent.putExtra("selectBgColor", selectBgColor.color)
+            intent.putExtra("selectFontColor", selectFontColor.color)
             startActivity(intent)
         }
 
@@ -235,7 +281,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
 class HorizontalAdapter :
     BaseQuickAdapter<SingleText, BaseViewHolder>(R.layout.item_single_text, null) {
+
+    private var textColor = Color.BLACK
+
+    public fun setTextColor(color: Int) {
+        textColor = color
+    }
+
     override fun convert(holder: BaseViewHolder, item: SingleText) {
+        holder.itemView.tvText.setTextColor(textColor)
+        holder.itemView.tvPinyin.setTextColor(textColor)
         holder.itemView.tvText.text = item.text ?: ""
         holder.itemView.tvPinyin.text = item.pinyin ?: ""
     }
