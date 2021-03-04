@@ -173,6 +173,11 @@
 # https://github.com/getActivity/ToastUtils
 -keep class com.hjq.toast.** {*;}
 
+# uCrop - Image Cropping Library for Android https://github.com/Yalantis/uCrop
+-dontwarn com.yalantis.ucrop**
+-keep class com.yalantis.ucrop** { *; }
+-keep interface com.yalantis.ucrop** { *; }
+
 # BaseRecyclerViewAdapterHelper
 -keep class com.chad.library.adapter.** {*;}
 -keep public class * extends com.chad.library.adapter.base.BaseQuickAdapter

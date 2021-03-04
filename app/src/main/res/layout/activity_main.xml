@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:scrollbars="vertical"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -40,26 +41,6 @@
             android:layout_margin="10dp"
             android:hint="输入释义" />
 
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/rbDefault"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="默认显示" />
-
-            <RadioButton
-                android:id="@+id/rbFullScreen"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="全屏显示(长按保存图片)" />
-        </RadioGroup>
-
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etMargin"
             android:layout_width="match_parent"
@@ -75,17 +56,44 @@
             android:layout_marginBottom="10dp"
             android:text="tips:高度最小为60，不足60自动补足，仅全屏显示时有效" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbUsePurely"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="纯色背景" />
+
+            <RadioButton
+                android:id="@+id/rbUseCustomBg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="自选背景" />
+        </RadioGroup>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="选择背景颜色："
+                android:text="选择纯色背景颜色："
                 android:textColor="@color/black" />
 
             <com.jaredrummler.android.colorpicker.ColorPanelView
@@ -97,6 +105,58 @@
 
         </LinearLayout>
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rbNoCrop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="不裁剪" />
+
+                <RadioButton
+                    android:id="@+id/rbCrop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="裁剪背景图" />
+            </RadioGroup>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSelectBg"
+                style="@style/Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:paddingHorizontal="10dp"
+                android:text="选择背景图片"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginBottom="10dp"
+            android:text="tips:若需要剪裁图片，则需提前勾选第二项" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -107,7 +167,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="选择字体颜色："
+                android:text="选择田字格字体颜色："
                 android:textColor="@color/black" />
 
             <com.jaredrummler.android.colorpicker.ColorPanelView
@@ -119,6 +179,60 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="选择拼音释义字体颜色："
+                android:textColor="@color/black" />
+
+            <com.jaredrummler.android.colorpicker.ColorPanelView
+                android:id="@+id/selectExColor"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                app:cpv_colorShape="circle" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbDefault"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="默认显示" />
+
+            <RadioButton
+                android:id="@+id/rbFullScreen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="全屏显示" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginBottom="10dp"
+            android:text="tips:默认显示时底部有保存图片按钮，全屏显示时为长按保存图片" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnMake"
@@ -129,33 +243,44 @@
             android:text="制作"
             android:textStyle="bold" />
 
-        <LinearLayout
+        <FrameLayout
             android:id="@+id/layoutContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="20dp"
-            android:background="#FADF4B"
-            android:orientation="vertical"
-            android:paddingVertical="20dp">
+            android:layout_marginVertical="20dp">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/proverbList"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:overScrollMode="never" />
-
-            <TextView
-                android:id="@+id/tvExplanation"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivBg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:layout_marginTop="20dp"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                tools:text="释义：" />
+                android:adjustViewBounds="true" />
 
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/proverbList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:overScrollMode="never" />
+
+                <TextView
+                    android:id="@+id/tvExplanation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginVertical="20dp"
+                    android:textColor="@color/black"
+                    android:textSize="18dp"
+                    tools:text="释义：" />
+
+            </LinearLayout>
+
+        </FrameLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSave"
@@ -167,5 +292,6 @@
             android:textStyle="bold" />
 
     </LinearLayout>
+
 
 </androidx.core.widget.NestedScrollView>

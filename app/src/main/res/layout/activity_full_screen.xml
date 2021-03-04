@@ -1,36 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layoutContent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FADF4B"
     android:clickable="true"
     android:descendantFocusability="blocksDescendants"
-    android:focusable="true"
-    android:orientation="vertical">
+    android:focusable="true">
 
-    <View
-        android:id="@+id/marginView"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/proverbList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:overScrollMode="never" />
-
-    <TextView
-        android:id="@+id/tvExplanation"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivBg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/black"
-        android:textSize="18dp"
-        tools:text="释义：" />
+        android:layout_height="match_parent"
+        android:scaleType="fitXY" />
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/marginView"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/proverbList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:overScrollMode="never" />
+
+        <TextView
+            android:id="@+id/tvExplanation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            tools:text="释义：" />
+
+    </LinearLayout>
+
+</FrameLayout>

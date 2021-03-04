@@ -14,8 +14,8 @@ android {
         applicationId "com.song.proverbmaker"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.1"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
         ndk {
@@ -96,16 +96,18 @@ dependencies {
     implementation 'com.hjq:xxpermissions:9.8'
     // 吐司框架：https://github.com/getActivity/ToastUtils
     implementation 'com.hjq:toast:8.8'
-    // https://github.com/Blankj/AndroidUtilCode/blob/master/lib/utilcode/README-CN.md
+    // 工具类库 https://github.com/Blankj/AndroidUtilCode/blob/master/lib/utilcode/README-CN.md
     implementation 'com.blankj:utilcodex:1.29.0'
     // BaseRecyclerViewAdapterHelper RecyclerView库 https://github.com/CymChad/BaseRecyclerViewAdapterHelper
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.6'
-    // https://github.com/belerweb/pinyin4j
+    // 汉字转拼音 https://github.com/belerweb/pinyin4j
     implementation 'com.belerweb:pinyin4j:2.5.0'
-    // Simplifyspan Spannable library https://github.com/iwgang/SimplifySpan
+    // SimplifySpan Spannable library https://github.com/iwgang/SimplifySpan
     implementation 'com.github.iwgang:simplifyspan:2.1'
     // 状态栏沉浸：https://github.com/gyf-dev/ImmersionBar
     implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
     // 取色盘 https://github.com/jaredrummler/ColorPicker
     implementation 'com.jaredrummler:colorpicker:1.1.0'
+    // uCrop - Image Cropping Library https://github.com/Yalantis/uCrop
+    implementation 'com.github.yalantis:ucrop:2.2.6-native'
 }

@@ -38,6 +38,11 @@
             android:screenOrientation="fullSensor"
             android:theme="@style/FullScreenTheme" />
 
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/FullScreenTheme"/>
+
         <!-- 适配 Android 7.0 文件意图 -->
         <provider
             android:name="androidx.core.content.FileProvider"

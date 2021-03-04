@@ -2,6 +2,7 @@ package com.song.proverbmaker
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.Typeface
 import android.media.MediaScannerConnection
@@ -69,11 +70,25 @@ class FullScreenActivity : AppCompatActivity(), View.OnLongClickListener {
         layoutParams.height = dp2px(margin.toFloat())
         marginView.layoutParams = layoutParams
 
-        val selectBgColor = intent.getIntExtra("selectBgColor", Color.parseColor("#FFFADF4B"))
+        if (intent.getBooleanExtra("rbUseCustomBg", false)) {
+            val bitmapUri: Uri? = intent.getParcelableExtra("customBg")
+            if (bitmapUri != null) {
+                val bitmap =
+                    BitmapFactory.decodeStream(contentResolver.openInputStream(bitmapUri))
+                ivBg.visibility = View.VISIBLE
+                ivBg.setImageBitmap(bitmap)
+            }
+        } else {
+            val selectBgColor = intent.getIntExtra("selectBgColor", Color.parseColor("#FFFADF4B"))
+            layoutContent.setBackgroundColor(selectBgColor)
+            ivBg.visibility = View.GONE
+        }
+
         val selectFontColor = intent.getIntExtra("selectFontColor", Color.parseColor("#FF000000"))
-        layoutContent.setBackgroundColor(selectBgColor)
         mAdapter.setTextColor(selectFontColor)
-        tvExplanation.setTextColor(selectFontColor)
+        val selectExColor = intent.getIntExtra("selectExColor", Color.parseColor("#FF000000"))
+        tvExplanation.setTextColor(selectExColor)
+        mAdapter.setPinyinColor(selectExColor)
 
         val data = intent.getParcelableArrayListExtra<SingleText>("dataList")
         val textExplanation = intent.getStringExtra("explanation")
