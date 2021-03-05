@@ -65,7 +65,7 @@ class FullScreenActivity : AppCompatActivity(), View.OnLongClickListener {
     }
 
     private fun initData() {
-        val margin = intent.getIntExtra("margin", 60)
+        val margin = intent.getIntExtra("margin", 30)
         val layoutParams = marginView.layoutParams
         layoutParams.height = dp2px(margin.toFloat())
         marginView.layoutParams = layoutParams
@@ -83,6 +83,12 @@ class FullScreenActivity : AppCompatActivity(), View.OnLongClickListener {
             layoutContent.setBackgroundColor(selectBgColor)
             ivBg.visibility = View.GONE
         }
+
+        val proverbFontSize = intent.getFloatExtra("fontSize", 40f)
+        val otherFontSize = proverbFontSize / 5f * 2f
+        mAdapter.setProverbTextSize(proverbFontSize)
+        mAdapter.setPinyinTextSize(otherFontSize)
+        tvExplanation.textSize = proverbFontSize / 20f * 9f
 
         val selectFontColor = intent.getIntExtra("selectFontColor", Color.parseColor("#FF000000"))
         mAdapter.setTextColor(selectFontColor)

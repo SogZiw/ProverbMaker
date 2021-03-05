@@ -41,21 +41,6 @@
             android:layout_margin="10dp"
             android:hint="输入释义" />
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etMargin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="输入内容距离顶部高度"
-            android:inputType="number" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="12dp"
-            android:layout_marginBottom="10dp"
-            android:text="tips:高度最小为60，不足60自动补足，仅全屏显示时有效" />
-
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -206,11 +191,56 @@
             android:layout_height="1dp"
             android:background="@android:color/darker_gray" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="字体大小："
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etProverbFontSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="输入字体大小，默认为40"
+                android:inputType="number"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etMargin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:hint="输入内容距离顶部高度"
+            android:inputType="number"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginBottom="10dp"
+            android:text="tips:高度最小为30，不足时自动补足" />
+
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <RadioButton
@@ -256,16 +286,18 @@
                 android:adjustViewBounds="true" />
 
             <LinearLayout
+                android:id="@+id/layoutMargin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingTop="20dp">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/proverbList"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:nestedScrollingEnabled="false"
                     android:overScrollMode="never" />
 
                 <TextView

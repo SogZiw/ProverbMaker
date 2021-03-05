@@ -1,22 +1,22 @@
 package com.song.proverbmaker
 
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Color
-import android.graphics.Typeface
+import android.graphics.*
 import android.media.MediaScannerConnection
 import android.net.Uri
-import android.os.Bundle
-import android.os.Environment
-import android.os.Parcelable
+import android.os.*
 import android.text.TextUtils
+import android.view.PixelCopy
 import android.view.View
+import android.view.Window
 import android.view.inputmethod.InputMethodManager
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.iwgang.simplifyspan.SimplifySpanBuild
 import cn.iwgang.simplifyspan.unit.SpecialTextUnit
+import com.blankj.utilcode.util.LogUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.hjq.permissions.Permission
@@ -25,6 +25,7 @@ import com.jaredrummler.android.colorpicker.ColorPickerDialog
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
 import com.song.proverbmaker.aop.Permissions
 import com.song.proverbmaker.aop.SingleClick
+import com.song.proverbmaker.extension.dp2px
 import com.song.proverbmaker.helper.PinyinFormatter
 import com.yalantis.ucrop.UCrop
 import kotlinx.android.parcel.Parcelize
@@ -189,7 +190,24 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, ColorPickerDialo
             data.add(SingleText(proverbList[i], pinyin))
         }
 
+        if (!TextUtils.isEmpty(etProverbFontSize.text.toString())) {
+            val proverbFontSize = etProverbFontSize.text.toString().toFloat()
+            val otherFontSize = proverbFontSize / 5f * 2f
+            mAdapter.setProverbTextSize(proverbFontSize)
+            mAdapter.setPinyinTextSize(otherFontSize)
+            tvExplanation.textSize = proverbFontSize / 20f * 9f
+        }
+
+        var margin = 30
+        if (!TextUtils.isEmpty(etMargin.text.toString().trim())) {
+            margin = etMargin.text.toString().toInt()
+            if (margin < 30) {
+                margin = 30
+            }
+        }
+
         if (rbDefault.isChecked) {
+            layoutMargin.setPadding(0, dp2px(margin.toFloat()), 0, 0)
             mAdapter.setList(data)
             if (!TextUtils.isEmpty(etExplanation.text.toString().trim())) {
                 val simplifySpan =
@@ -202,6 +220,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, ColorPickerDialo
                 layoutContent.setBackgroundColor(selectBgColor.color)
                 ivBg.visibility = View.GONE
             } else {
+                layoutContent.setBackgroundColor(Color.TRANSPARENT)
                 if (bitmapUri != null) {
                     val bitmap =
                         BitmapFactory.decodeStream(contentResolver.openInputStream(bitmapUri!!))
@@ -214,13 +233,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, ColorPickerDialo
         } else {
             val textExplanation = etExplanation.text.toString()
             val intent = Intent(this, FullScreenActivity::class.java)
-            var margin = 60
-            if (!TextUtils.isEmpty(etMargin.text.toString().trim())) {
-                margin = etMargin.text.toString().toInt()
-                if (margin < 60) {
-                    margin = 60
-                }
-            }
             intent.putParcelableArrayListExtra("dataList", data)
             intent.putExtra("explanation", textExplanation)
             intent.putExtra("margin", margin)
@@ -228,8 +240,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, ColorPickerDialo
             intent.putExtra("selectBgColor", selectBgColor.color)
             intent.putExtra("selectFontColor", selectFontColor.color)
             intent.putExtra("selectExColor", selectExColor.color)
+
             if (bitmapUri != null) {
                 intent.putExtra("customBg", bitmapUri)
+            }
+            if (!TextUtils.isEmpty(etProverbFontSize.text.toString())) {
+                val proverbFontSize = etProverbFontSize.text.toString().toFloat()
+                intent.putExtra("fontSize", proverbFontSize)
             }
             startActivity(intent)
         }
@@ -283,16 +300,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, ColorPickerDialo
 
     /** 获取 View 的截图*/
     private fun getCacheBitmapFromView(view: View): Bitmap? {
+        var bitmap: Bitmap? = null
         view.isDrawingCacheEnabled = true
-        view.buildDrawingCache(true)
+        view.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_AUTO
         val drawingCache = view.drawingCache
-        val bitmap: Bitmap?
         if (drawingCache != null) {
             bitmap = Bitmap.createBitmap(drawingCache)
-            view.isDrawingCacheEnabled = false
-        } else {
-            bitmap = null
         }
+        view.destroyDrawingCache()
+        view.isDrawingCacheEnabled = false
         return bitmap
     }
 
@@ -364,12 +380,23 @@ class HorizontalAdapter :
 
     private var textColor = Color.BLACK
     private var pinyinColor = Color.BLACK
+    private var proverbTextSize = 40f
+    private var pinyinTextSize = 16f
 
     fun setTextColor(color: Int) {
         textColor = color
     }
+
     fun setPinyinColor(color: Int) {
         pinyinColor = color
+    }
+
+    fun setProverbTextSize(size: Float) {
+        proverbTextSize = size
+    }
+
+    fun setPinyinTextSize(size: Float) {
+        pinyinTextSize = size
     }
 
     override fun convert(holder: BaseViewHolder, item: SingleText) {
@@ -377,6 +404,14 @@ class HorizontalAdapter :
         holder.itemView.tvPinyin.setTextColor(pinyinColor)
         holder.itemView.tvText.text = item.text ?: ""
         holder.itemView.tvPinyin.text = item.pinyin ?: ""
+
+        holder.itemView.tvText.textSize = proverbTextSize
+        holder.itemView.tvPinyin.textSize = pinyinTextSize
+
+        val layoutParams = holder.itemView.tvText.layoutParams
+        layoutParams.height = dp2px(proverbTextSize * 3f / 2f)
+        layoutParams.width = dp2px(proverbTextSize * 3f / 2f)
+        holder.itemView.tvText.layoutParams = layoutParams
     }
 }
 

@@ -90,7 +90,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    // AOP 插件库：https://mvnrepository.com/artifact/org.aspectj/aspectjrt
+    // AOP插件库：https://mvnrepository.com/artifact/org.aspectj/aspectjrt
     implementation 'org.aspectj:aspectjrt:1.9.5'
     // 权限请求框架：https://github.com/getActivity/XXPermissions
     implementation 'com.hjq:xxpermissions:9.8'
@@ -98,7 +98,7 @@ dependencies {
     implementation 'com.hjq:toast:8.8'
     // 工具类库 https://github.com/Blankj/AndroidUtilCode/blob/master/lib/utilcode/README-CN.md
     implementation 'com.blankj:utilcodex:1.29.0'
-    // BaseRecyclerViewAdapterHelper RecyclerView库 https://github.com/CymChad/BaseRecyclerViewAdapterHelper
+    // BaseRecyclerViewAdapterHelper https://github.com/CymChad/BaseRecyclerViewAdapterHelper
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.6'
     // 汉字转拼音 https://github.com/belerweb/pinyin4j
     implementation 'com.belerweb:pinyin4j:2.5.0'
